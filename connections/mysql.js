@@ -19,6 +19,28 @@ connection.connect((err) => {
 });
 
 
+// Connecting to mysql DB
+// connection.connect((err) => {
+//   if (err) {
+//     console.error("Error connecting to MySQL:", err.stack);
+//     return;
+//   }
+//   console.log("Connected to MySQL as id " + connection.threadId);
+// });
+
+// process.on("SIGINT", () => {
+//   connection.end((err) => {
+//     if (err) {
+//       console.error("Error closing connection:", err.stack);
+//       process.exit(1);
+//     }
+//     console.log("MySQL connection closed");
+//     process.exit(0);
+//   });
+// });
+
+
+
 // Example query to select data from a table
 
 // connection.query("SELECT * FROM users", (err, results) => {

@@ -1,33 +1,55 @@
 require("dotenv").config();
-const express = require("express");
+const express = require("express")
+const mongoose = require("mongoose")
+const cors = require("cors")
+const bodyParser = require("body-parser")
 const app = express();
 const router = express.Router();
-const connection = require("./connections/mysql");
+// const connection = require("./connections/mysql");
+// const userModal = require("./models/user")
+const userrouter = require("./routers/user")
 const PORT = process.env.PORT || 5000;
 
 
 
+// Middlewares
+
+app.use(cors())
+app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(bodyParser.raw())
+
+
+app.use("/", userrouter)
 
 
 // Connecting to mysql DB
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to MySQL:", err.stack);
-    return;
-  }
-  console.log("Connected to MySQL as id " + connection.threadId);
-});
+// connection.connect((err) => {
+//   if (err) {
+//     console.error("Error connecting to MySQL:", err.stack);
+//     return;
+//   }
+//   console.log("Connected to MySQL as id " + connection.threadId);
+// });
 
-process.on("SIGINT", () => {
-  connection.end((err) => {
-    if (err) {
-      console.error("Error closing connection:", err.stack);
-      process.exit(1);
-    }
-    console.log("MySQL connection closed");
-    process.exit(0);
-  });
-});
+// process.on("SIGINT", () => {
+//   connection.end((err) => {
+//     if (err) {
+//       console.error("Error closing connection:", err.stack);
+//       process.exit(1);
+//     }
+//     console.log("MySQL connection closed");
+//     process.exit(0);
+//   });
+// });
+
+// MongoDB connection
+mongoose.connect("mongodb://localhost/gymate", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log("Connected to MongoDB"))
+.catch(err => console.error("MongoDB connection error:", err));
+
 
 
 
