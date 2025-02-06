@@ -4,6 +4,7 @@ const otpHelper = require("../helpers/getotp")
 const verifyOtpHelper = require("../helpers/verifyotp")
 const userRouter = express.Router()
 const signupHelper = require("../helpers/signup")
+const loginpHelper = require("../helpers/login")
 
 
 
@@ -41,7 +42,13 @@ userRouter.post('/signup', (req,res) =>{
 })
 
 userRouter.post('/login', (req,res) =>{
-    let otp = Math.floor(10000 + Math.random() * 90000)
+  loginpHelper(req.body, (err, response) => {
+    if (err) {
+      res.send({ status: 'failed', message: err?.message })
+    } else {
+      res.send({ status: 'success', data: response })
+    }
+  })
 })
 
 
