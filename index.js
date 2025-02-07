@@ -10,6 +10,7 @@ const app = express();
 const userRouter = require("./routers/user")
 const unProtectedRoutes=["/signup", "/login", "/getotp", "/verifyotp"]
 const PORT = process.env.PORT || 5000;
+const DATABASE = process.env.DATABASE
 
 
 
@@ -63,11 +64,19 @@ app.use("/", userRouter)
 // });
 
 // MongoDB connection
-mongoose.connect("mongodb://localhost/gymate", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log("Connected to MongoDB"))
-.catch(err => console.error("MongoDB connection error:", err));
+// mongoose.connect(`${DATABASE}`, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// }).then(() => console.log("Connected to MongoDB"))
+// .catch(err => console.error("MongoDB connection error:", err));
+
+
+mongoose.connect(`${DATABASE}`,()=>{
+  console.log('connected to db');
+  // console.log(DATABASE)
+},(err)=>{
+  console.log(err);
+})
 
 
 
