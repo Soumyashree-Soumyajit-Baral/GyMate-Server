@@ -12,7 +12,9 @@ module.exports = (incoming, callback) => {
   }
 
   function getotp(_callback) {
+    console.log(incoming)
     Otp.setotp(incoming, (err, _user) => {
+      console.log(err)
       if (err) {
         clienterr = "Error getting OTP"
       } else if (!_user) {

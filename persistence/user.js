@@ -6,10 +6,11 @@ class User {
     userModal
       .findOne({ mobile: incoming.mobile })
       .then((user) => {
+        console.log(user)
         if (user) {
           callback(null, user); // Return the OTP if user exists
         } else {
-          callback(null, {msg : "User not found"});
+          callback(null, null);
         }
       })
       .catch((error) => {
