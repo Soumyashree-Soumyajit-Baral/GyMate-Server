@@ -1,6 +1,7 @@
 const async = require('async')
 const User = require('../persistence/user')
 const Otp = require("../persistence/otp");
+const jwt = require("jsonwebtoken")
 
 module.exports = (incoming, callback) => {
   let clienterr, authToken, user
@@ -15,7 +16,7 @@ module.exports = (incoming, callback) => {
       User.get(incoming, (err, _user) => {
         if (err) {
           clienterr = "Error Getting User";
-        } else if (_user.length < 1) {
+        } else if (!_user) {
           clienterr = "User does not exist";
         }
         _callback(clienterr);
@@ -24,14 +25,15 @@ module.exports = (incoming, callback) => {
 
   function verifyotp(_callback) {
     Otp.verifyotp(incoming, (err, _user) => {
+      console.log(err)
           if (err) {
             clienterr = "Error getting OTP";
           } else if (!_user)
             clienterr = `No user present with mobile no. ${incoming.mobile}.`;
           else {
             user = _user;
-            if (_user.status !== "active")
-              clienterr = "Sorry! The user is not active";
+            // if (_user.status !== "active")
+            //   clienterr = "Sorry! The user is not active";
           }
           _callback(clienterr);
         });
