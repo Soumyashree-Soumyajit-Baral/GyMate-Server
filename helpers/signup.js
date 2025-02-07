@@ -17,6 +17,7 @@ module.exports = (incoming, callback) => {
         console.log(err)
         clienterr = "Error Getting User";
       } else if (_user) {
+        console.log(_user)
         clienterr = "User already exist";
       }
       _callback(clienterr);
